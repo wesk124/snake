@@ -181,7 +181,7 @@ class Game(Frame):
 		self.timer_update()
 
 
-		self.count = 200
+		self.count = 60 # The default game time is 60
 		self.d = Label(self.init.frame, text=self.count, font=("Times", 25), fg = 'white', bg = 'black')
 		self.d.pack (side = TOP)
 		self.count_down()
@@ -250,15 +250,16 @@ class Game(Frame):
 		self.after(1000,self.timer_update)
 
     def count_down(self):
-			if self.isStart == True:
-				print("check")
+		if self.isStart is True:
+			if self.snake.status[0] is "run":
+				print("start count down")
 				self.check = True
 	    		self.count = self.count-1
 	    		self.d.configure(text = self.count)
-	    		if self.count != 0:
-		    		self.after(1000,self.count_down)
-	    		else:
-		    		count = 0
+	    	if self.count != 0:
+		    	self.after(1000,self.count_down)
+	    	else:
+		    	count = 0
 
 
 if __name__ == "__main__":
