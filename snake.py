@@ -176,13 +176,18 @@ class Game(Frame):
 		self.pause.pack(side =	TOP)
 		self.pause.bind('<Button-1>',self.Pause)
 
-		self.timer = Label(self.init.frame, text="", font=("Times", 25), fg = 'white', bg = 'black')
+		self.timerText = Label(self.init.frame, text =" Clock:",font =("Purise",20),fg='white',bg=
+		'black')
+		self.timerText.pack (side = TOP,anchor = W)
+		self.timer = Label(self.init.frame, text="", font=("Times", 20), fg = 'white', bg = 'black')
 		self.timer.pack (side = TOP)
 		self.timer_update()
 
-
+		self.countText = Label(self.init.frame, text =" Game Time:",font =("Purise",20),fg='white',bg=
+		'black')
+		self.countText.pack (side = TOP,anchor = W)
 		self.count = 60 # The default game time is 60
-		self.d = Label(self.init.frame, text=self.count, font=("Times", 25), fg = 'white', bg = 'black')
+		self.d = Label(self.init.frame, text=self.count, font=("Times", 20), fg = 'white', bg = 'black')
 		self.d.pack (side = TOP)
 		self.count_down()
 
@@ -190,7 +195,7 @@ class Game(Frame):
 		self.score.pack(side=TOP, anchor = W)
 
 		var = StringVar()
-		self.text = Message(self.init.frame,textvariable=var, font=("Purise",15), fg ='white',bg
+		self.text = Message(self.init.frame,textvariable=var, font=("Times",20), fg ='white',bg
 		='black')
 		var.set(self.snake.score)
 		self.text.pack(side =TOP)
