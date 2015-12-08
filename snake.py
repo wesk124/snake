@@ -80,12 +80,12 @@ class Snake(object):
 	self.grid = Grid
 	self.apple = Apple(self.grid)
 	self.init = Init
-	self.snake = [(12,6),(12,7)] 
+	self.snake = [(15,13),(15,14),(15,15),(15,16)]
 	self.status = ["run","stop"]   # 0 -> stop 1->run
 	self.score = 0
 	self.speed =300
 	self.isOver = False
-	self.direction = 'Right'
+	self.direction = 'Up'
 	self.privious = ""
 	self.display()
 	self.display_apple()
@@ -151,6 +151,7 @@ class Game(Frame):
 		self.init = Init(master)
 		self.snake = Snake(self.grid,self.init)
 
+		self.check = False
 
 
 		self.frame = Label(self.init.frame, text = " Speed Control:",font=("Purise",20),fg='white',bg='black')
@@ -178,8 +179,12 @@ class Game(Frame):
 		self.timer = Label(self.init.frame, text="", font=("Times", 25), fg = 'white', bg = 'black')
 		self.timer.pack (side = TOP)
 		self.timer_update()
-		self.count_down(300)
 
+
+		self.count = 200
+		self.d = Label(self.init.frame, text=self.count, font=("Times", 25), fg = 'white', bg = 'black')
+		self.d.pack (side = TOP)
+		self.count_down()
 
 		self.score = Label (self.init.frame, text=" Score:",font=("Times",25),fg='white',bg='black')
 		self.score.pack(side=TOP, anchor = W)
@@ -198,7 +203,9 @@ class Game(Frame):
     def speedUp(self,event):
 	    if self.snake.speed > 50:
 		self.snake.speed -=50
-    def run(self):	
+    def run(self):
+		#if self.check == False:
+		#	self.count_down()
 		if self.snake.check_score != self.snake.score:
 			self.snake.check_score = self.snake.score
 			self.text.destroy()
@@ -208,12 +215,13 @@ class Game(Frame):
 			self.text.pack(side =TOP)
 
 		if self.isStart == True:
+			#print("is true")
 			if self.snake.status[0] is "run":
-				self.snake.move()
+		        	self.snake.move()
 			if self.snake.isOver == True:
-			message = tkMessageBox.showinfo("Game Over","Game Over!")
-			if message == 'ok':
-				sys.exit()
+			    message = tkMessageBox.showinfo("Game Over","Game Over!")
+			    if message == 'ok':
+					    sys.exit()
 		self.after(self.snake.speed,self.run)
 
     def key_release(self, event):
@@ -240,11 +248,17 @@ class Game(Frame):
 		self.time = time.strftime("%H:%M:%S")
 		self.timer.configure(text = self.time)
 		self.after(1000,self.timer_update)
-		
-	def count_down(self, count):
-	count = count -1
-	self.timer.configure(text = count)
-	self.after(1000,self.count_down(count))
+
+    def count_down(self):
+			if self.isStart == True:
+				print("check")
+				self.check = True
+	    		self.count = self.count-1
+	    		self.d.configure(text = self.count)
+	    		if self.count != 0:
+		    		self.after(1000,self.count_down)
+	    		else:
+		    		count = 0
 
 
 if __name__ == "__main__":
