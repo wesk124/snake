@@ -80,7 +80,7 @@ class Snake(object):
 	self.grid = Grid
 	self.apple = Apple(self.grid)
 	self.init = Init
-	self.snake = [(15,13),(15,14),(15,15),(15,16)]
+	self.snake = [(15,13),(15,14),(15,15),(15,16), (15,17), (15, 18), (15,19)]
 	self.status = ["run","stop"]   # 0 -> stop 1->run
 	self.score = 0
 	self.speed =300
