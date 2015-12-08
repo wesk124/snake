@@ -259,7 +259,9 @@ class Game(Frame):
 	    	if self.count != 0:
 		    	self.after(1000,self.count_down)
 	    	else:
-		    	count = 0
+				count = 0
+				self.snake.isOver = True
+
 
 
 if __name__ == "__main__":
