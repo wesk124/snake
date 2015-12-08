@@ -254,8 +254,8 @@ class Game(Frame):
 			if self.snake.status[0] is "run":
 				print("start count down")
 				self.check = True
-	    		self.count = self.count-1
-	    		self.d.configure(text = self.count)
+	    			self.count = self.count-1
+	    			self.d.configure(text = self.count)
 	    	if self.count != 0:
 		    	self.after(1000,self.count_down)
 	    	else:
