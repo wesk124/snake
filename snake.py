@@ -142,51 +142,53 @@ class Snake(object):
 
 class Game(Frame):
     def __init__ (self,master =None,*args,**kwargs):
-	Frame.__init__(self,master)
-	self.master = master
-	self.isStart = False
-	self.bind_all("<KeyRelease>", self.key_release)
+		Frame.__init__(self,master)
+		self.master = master
+		self.isStart = False
+		self.bind_all("<KeyRelease>", self.key_release)
 
-	self.grid = Grid(master,*args,**kwargs)
-	self.init = Init(master)
-	self.snake = Snake(self.grid,self.init)
+		self.grid = Grid(master,*args,**kwargs)
+		self.init = Init(master)
+		self.snake = Snake(self.grid,self.init)
 
 
 
-	self.frame = Label(self.init.frame, text = " Speed Control:",font=("Purise",20),fg='white',bg='black')
-	self.frame.pack(side=TOP,anchor =W,fill= Y)
+		self.frame = Label(self.init.frame, text = " Speed Control:",font=("Purise",20),fg='white',bg='black')
+		self.frame.pack(side=TOP,anchor =W,fill= Y)
 
-	self.up = Button (self.init.frame,text ="  Speed  Up ",width =20)
-	self.up.pack(side=TOP)
-	self.up.bind('<Button-1>',self.speedUp)
-	
-	self.label = Label(self.init.frame, text="  ",fg = 'white',bg = 'black')
-	self.label.pack(side =TOP)
+		self.up = Button (self.init.frame,text ="  Speed  Up ",width =20)
+		self.up.pack(side=TOP)
+		self.up.bind('<Button-1>',self.speedUp)
 
-	self.down = Button (self.init.frame, text = "Speed Down",width=20)
-	self.down.pack (side = TOP)
-	self.down.bind('<Button-1>', self.speedDown)
+		self.label = Label(self.init.frame, text="  ",fg = 'white',bg = 'black')
+		self.label.pack(side =TOP)
 
-	self.pauseText = Label(self.init.frame, text =" Pause:",font =("Purise",20),fg='white',bg=
-	'black')
-	self.pauseText.pack (side = TOP,anchor = W)
-	
-	self.pause = Button(self.init.frame, text = "  Pause  ",width =20)
-	self.pause.pack(side =	TOP)
-	self.pause.bind('<Button-1>',self.Pause)
+		self.down = Button (self.init.frame, text = "Speed Down",width=20)
+		self.down.pack (side = TOP)
+		self.down.bind('<Button-1>', self.speedDown)
 
-	self.timer = Label(self.init.frame, text="")
-	self.timer.pack (side =TOP)
-	self.timer_update()
+		self.pauseText = Label(self.init.frame, text =" Pause:",font =("Purise",20),fg='white',bg=
+		'black')
+		self.pauseText.pack (side = TOP,anchor = W)
 
-	self.score = Label (self.init.frame, text=" Score:",font=("Times",25),fg='white',bg='black')
-	self.score.pack(side=TOP, anchor = W)
+		self.pause = Button(self.init.frame, text = "  Pause  ",width =20)
+		self.pause.pack(side =	TOP)
+		self.pause.bind('<Button-1>',self.Pause)
 
-	var = StringVar()
-	self.text = Message(self.init.frame,textvariable=var, font=("Purise",15), fg ='white',bg
-	='black')
-	var.set(self.snake.score)
-	self.text.pack(side =TOP)
+		self.timer = Label(self.init.frame, text="", font=("Times", 25), fg = 'white', bg = 'black')
+		self.timer.pack (side = TOP)
+		self.timer_update()
+		self.count_down(300)
+
+
+		self.score = Label (self.init.frame, text=" Score:",font=("Times",25),fg='white',bg='black')
+		self.score.pack(side=TOP, anchor = W)
+
+		var = StringVar()
+		self.text = Message(self.init.frame,textvariable=var, font=("Purise",15), fg ='white',bg
+		='black')
+		var.set(self.snake.score)
+		self.text.pack(side =TOP)
 
     def Pause(self,event):
 		self.snake.status.reverse()
@@ -197,26 +199,28 @@ class Game(Frame):
 	    if self.snake.speed > 50:
 		self.snake.speed -=50
     def run(self):	
-	if self.snake.check_score != self.snake.score:
-	    self.snake.check_score = self.snake.score
-	    self.text.destroy()
-	    var = StringVar()
-	    self.text = Message(self.init.frame,textvariable=var, font=("Purise",15), fg ='white',bg='black')
-	    var.set(self.snake.score)
-	    self.text.pack(side =TOP)
+		if self.snake.check_score != self.snake.score:
+			self.snake.check_score = self.snake.score
+			self.text.destroy()
+			var = StringVar()
+			self.text = Message(self.init.frame,textvariable=var, font=("Purise",15), fg ='white',bg='black')
+			var.set(self.snake.score)
+			self.text.pack(side =TOP)
 
-	if self.isStart == True:
-	    if self.snake.status[0] is "run":
-			self.snake.move()
-	    if self.snake.isOver == True:
-		message = tkMessageBox.showinfo("Game Over","Game Over!")
-		if message == 'ok':
-		    sys.exit()
-	self.after(self.snake.speed,self.run)
+		if self.isStart == True:
+			if self.snake.status[0] is "run":
+				self.snake.move()
+			if self.snake.isOver == True:
+			message = tkMessageBox.showinfo("Game Over","Game Over!")
+			if message == 'ok':
+				sys.exit()
+		self.after(self.snake.speed,self.run)
+
     def key_release(self, event):
         key = event.keysym
+
 	direc = {'Up','Down','Left','Right'}
-        if key in direc:   
+    	if key in direc:
 	    if self.snake.status[0] == 'run':
 			self.snake.dir_change(key)
 			if self.isStart == True:
@@ -233,12 +237,14 @@ class Game(Frame):
 		self.snake.speed +=50
 
     def timer_update(self):
-        self.time = time.strftime("%H:%M:%S")
-        self.timer.configure(text = self.time)
-        self.after(1000,self.timer_update)
-
-
-
+		self.time = time.strftime("%H:%M:%S")
+		self.timer.configure(text = self.time)
+		self.after(1000,self.timer_update)
+		
+	def count_down(self, count):
+	count = count -1
+	self.timer.configure(text = count)
+	self.after(1000,self.count_down(count))
 
 
 if __name__ == "__main__":
