@@ -31,7 +31,7 @@ class Init(object):
 	var =StringVar()
 
 	message = Message (self.frame,textvariable=var,bg= 'black',font=("Purise",15),fg='white',width=300)
-	var.set("\nPause : Key p\nSpeed Up: Key u\nSpeed Down: Key d\nDirection: direction key\n")
+	var.set("\nPause : Key p\nSpeed Up: Key u\nSpeed Down: Key d\nDirection: Left Right Up Down \n")
 	message.pack(side=TOP)
 
 
@@ -186,12 +186,13 @@ class Game(Frame):
 		self.countText = Label(self.init.frame, text =" Game Time:",font =("Purise",20),fg='white',bg=
 		'black')
 		self.countText.pack (side = TOP,anchor = W)
-		self.count = 60 # The default game time is 60
+		self.count = 100 # The default game time is 60
 		self.d = Label(self.init.frame, text=self.count, font=("Times", 20), fg = 'white', bg = 'black')
 		self.d.pack (side = TOP)
 		self.count_down()
 
-		self.score = Label (self.init.frame, text=" Score:",font=("Times",25),fg='white',bg='black')
+
+		self.score = Label (self.init.frame, text=" Score:",font=("Purise",20),fg='white',bg='black')
 		self.score.pack(side=TOP, anchor = W)
 
 		var = StringVar()
@@ -257,7 +258,7 @@ class Game(Frame):
     def count_down(self):
 		if self.isStart is True:
 			if self.snake.status[0] is "run":
-				print("start count down")
+				#print("start count down")
 				self.check = True
 	    			self.count = self.count-1
 	    			self.d.configure(text = self.count)
